@@ -8,7 +8,8 @@ const app = express();
 let dataBase;
 
 //MongoDB connection string
-const uri = `mongodb+srv://BlueJersey:Houda_2022@cluster0.swe5pqd.mongodb.net/?retryWrites=true&w=majority`;
+const uri = process.env.MONGO_URL;
+// console.log(process.env.DB_URL);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
