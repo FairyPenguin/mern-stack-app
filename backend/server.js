@@ -5,6 +5,9 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 // express function instance
 const app = express();
 
+app.set("view engine", "ejs");
+app.set("views", "./views");
+
 let dataBase;
 
 //MongoDB connection string
@@ -33,16 +36,9 @@ app.get("/", async (req, res) => {
     .find()
     .toArray();
 
+  res.render("home");
   //   console.log(allBooks);
-  res.send(JSON.stringify(allBooks));
-  res.send(`<h1>Books List</h1> 
-  ${allBooks
-    .map((book) => {
-      return `<h2>${book.title}</h2> - <span>${book.author}</span>`;
-    })
-    .join("")}
-  
-  `);
+  // res.send(JSON.stringify(allBooks));
   //   res.json();
 });
 
@@ -63,7 +59,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-    client.db("admin").command({ ping: 1 });
+    client.db("books").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
