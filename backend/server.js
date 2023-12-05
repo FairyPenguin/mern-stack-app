@@ -1,9 +1,14 @@
 //imports
 import express from "express";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import cors from "cors";
 
 // express function instance
 const app = express();
+
+//cors
+
+app.use(cors());
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
@@ -36,7 +41,7 @@ app.get("/", async (req, res) => {
     .find()
     .toArray();
 
-  res.render("home");
+  res.render("home", { allBooks });
   //   console.log(allBooks);
   // res.send(JSON.stringify(allBooks));
   //   res.json();
@@ -48,6 +53,13 @@ app.get("/admin", (req, res) => {
   res.send("The admin route");
 });
 
+app.get("/api/books", async (req, res) => {
+  const allBooks = await dataBase
+    .collection("softwareEngineering")
+    .find()
+    .toArray();
+  res.json(allBooks);
+});
 /*
 Database connection before the server starts 
 so the DB will be ready before any interaction with the 
@@ -59,6 +71,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
+
     client.db("books").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
@@ -66,6 +79,9 @@ async function run() {
 
     dataBase = client.db("books");
   } finally {
+    await dataBase;
+    // .collection("softwareEngineering")
+    // .updateMany({}, { $rename: { "Publication date": "publicationDate" } });
     // Ensures that the client will close when you finish/error
     // await client.close();
 
