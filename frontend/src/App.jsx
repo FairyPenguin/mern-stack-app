@@ -1,15 +1,25 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import AnimalCard from './components/AnimalCard/AnimalCard'
+import NewBook from "./pages/AddNewBook/NewBook"
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
+
+
     <>
-      <AnimalCard />
+      <a href="http://"></a>
+      <main>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/add-new-book" element={<NewBook />} />
+            <Route path="/" element={<AnimalCard />} />
+          </Routes>
+        </BrowserRouter>
+      </main>
     </>
   )
 }

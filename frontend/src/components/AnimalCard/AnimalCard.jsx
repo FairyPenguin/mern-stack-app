@@ -31,6 +31,16 @@ function AnimalCard() {
 
     return (
         <>
+            <div className="pb-4">
+                <span>
+                    <a className="inline-block cursor-pointer bg-black text-base font-medium
+                 py-3 px-5 rounded-lg border border-solid border-transparent "
+
+                        href="/add-new-book/">
+                        Add new book
+                    </a>
+                </span>
+            </div>
             <div>AnimalCard</div>
 
             <section className={styles.books}>
