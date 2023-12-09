@@ -2,6 +2,8 @@
 import express from "express";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import cors from "cors";
+import multer from "multer";
+import sanitizeHTML from "sanitize-html";
 
 // express function instance
 const app = express();
@@ -10,9 +12,13 @@ const app = express();
 
 app.use(cors());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+const upload = multer();
 let dataBase;
 
 //MongoDB connection string
@@ -60,6 +66,37 @@ app.get("/api/books", async (req, res) => {
     .toArray();
   res.json(allBooks);
 });
+
+app.post("/api/books", upload.single("cover-image"), (req, res) => {
+  // const values = [
+  //   req.body.title,
+  //   req.body.author,
+  //   req.body.subtitle,
+  //   req.body.description,
+  //   req.body.coverImage,
+  //   req.body.publicationDate,
+  // ];
+
+  const readValues = req.body;
+  console.log(readValues);
+
+  // return res.json("added.....check");
+  return res.json(readValues);
+});
+
+//middleware cleanup function
+function cleanupHandler(req, res, next) {
+  if (req.body.name != "string") {
+    req.body.name === "";
+  }
+  if (req.body.name != "string") {
+    req.body.name === "";
+  }
+  if (req.body.name != "string") {
+    req.body.name === "";
+  }
+}
+
 /*
 Database connection before the server starts 
 so the DB will be ready before any interaction with the 
